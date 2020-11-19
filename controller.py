@@ -12,7 +12,7 @@ def gpioSetup():
     GPIO.setup(27, GPIO.OUT)
     GPIO.output(27,GPIO.LOW)
 
-def relayON(gpioNumber):
+def relayON(gpioNumber, relayStatus):
     GPIO.output(gpioNumber, GPIO.HIGH)
     relayStatus = True
     return relayStatus
@@ -33,22 +33,27 @@ try:
     while True:
         sensor = DHT22(17)
         result = sensor.read()
+        timeStamp = time.ctime()
         resultHumidity = result.get('humidity')
-        if resultHumidity < 80:
-            relayON(27)
-            print(relayStatus)
-            waitXSeconds(10)
-            print('case1')
-            print(result)
-        elif resultHumidity > 85:
-            waitXSeconds(10)
-            relayOFF(27)
-            print('case2')
-            print(result)
-        elif resultHumidity < 50 and relayStatus == True:
-            waitXSeconds(10)
-            print('case3: atomizer is broken')
-            print(result)
+        resultValidation = result.get('valid')
+        if resultValidation == False:
+            time.sleep (2) #If sensor is not meausuring properly, then program sleeps for 2 sec
+        else: 
+            if resultHumidity < 80:
+                relayON(27, relayStatus)
+                print(relayStatus)
+                waitXSeconds(10)
+                print('case1')
+                print(result, timeStamp)
+            elif resultHumidity > 85:
+                waitXSeconds(10)
+                relayOFF(27)
+                print('case2')
+                print(result)
+            elif resultHumidity < 50 and relayStatus == True:
+                waitXSeconds(10)
+                print('case3: atomizer is broken')
+                print(result)
 except KeyboardInterrupt:
     print('cancelled by the user')
 finally:
