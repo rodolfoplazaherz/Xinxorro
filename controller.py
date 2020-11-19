@@ -21,8 +21,8 @@ def relayOFF(gpioNumber):
 
 def waitXSeconds(n):
     for i in range (0,n):
-    time.sleep(n)
-    print(i)
+        time.sleep(n)
+        print(i)
 
 try:
     gpioSetup()
