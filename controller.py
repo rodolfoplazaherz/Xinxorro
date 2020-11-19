@@ -23,8 +23,8 @@ def relayOFF(gpioNumber):
     return relayStatus
 
 def waitXSeconds(n):
+    time.sleep(n)
     for i in range (0,n):
-        time.sleep(n)
         print(i)
 
 try:
@@ -40,7 +40,7 @@ try:
             time.sleep (2) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else: 
             if resultHumidity < 80:
-                relayON(27, relayStatus)
+                relayStatus = relayON(27, relayStatus)
                 print(relayStatus)
                 waitXSeconds(10)
                 print('case1')
