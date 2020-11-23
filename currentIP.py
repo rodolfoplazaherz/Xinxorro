@@ -8,7 +8,7 @@ password = "72e(q|{ih2yT"
 to = "rodolfoplaza@hotmail.com"
 
 hostname = socket.gethostname()
-local_ip = os.system("hostname -I").read()
+local_ip = subprocess.check_output('hostname -I', shell=True) 
 
 with smtplib.SMTP_SSL('35.214.219.34', 465) as smtp:
 
