@@ -4,9 +4,11 @@ import time
 import os
 import subprocess
 
+time.sleep(10)
+
 email = "dplaza@tryento.com"
 password = "72e(q|{ih2yT"
-to = "rodolfoplaza@hotmail.com"
+to = "diegoplazau@hotmail.com"
 
 hostname = socket.gethostname()
 local_ip = subprocess.check_output('hostname -I', shell=True) 
