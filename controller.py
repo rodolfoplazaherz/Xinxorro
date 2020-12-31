@@ -5,10 +5,8 @@ import os
 import pigpio
 
 try:
-    os.system("export PIGPIO_PORT=8877")
-    os.system("export PIGPIO_ADDR=soft")
-    os.system("sudo pigpiod")
-    pi = pigpio.pi('soft', 8877)
+    os.system("export PIGPIO_PORT=8888 && sudo pigpiod")
+    pi = pigpio.pi('soft', 8888)
 except:
     raise
 
