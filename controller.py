@@ -23,9 +23,8 @@ def relayOFF(gpioNumber):
     return relayStatus
 
 def waitXSeconds(n):
+    print("Waiting {} seconds".format(n))
     time.sleep(n)
-    for i in range (0,n):
-        print(i)
 
 try:
     gpioSetup()
@@ -43,16 +42,16 @@ try:
             if resultHumidity < 80:
                 relayStatus = relayON(27, relayStatus)
                 print(relayStatus)
-                waitXSeconds(10)
+                waitXSeconds(2)
                 print('case1')
                 print(result, timeStamp)
             elif resultHumidity > 85:
-                waitXSeconds(10)
+                waitXSeconds(2)
                 relayOFF(27)
                 print('case2')
                 print(result)
             elif resultHumidity < 50 and relayStatus == True:
-                waitXSeconds(10)
+                waitXSeconds(2)
                 print('case3: atomizer is broken')
                 print(result)
 except KeyboardInterrupt:
