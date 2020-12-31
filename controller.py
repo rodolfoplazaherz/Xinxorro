@@ -32,7 +32,6 @@ try:
     while True:
         sensor = DHT22(17)
         result = sensor.read()
-        print(result)
         timeStamp = time.ctime()
         resultHumidity = result.get('humidity')
         resultValidation = result.get('valid')
@@ -40,20 +39,23 @@ try:
             time.sleep (2) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else: 
             if resultHumidity < 80:
-                relayStatus = relayON(27, relayStatus)
-                print(relayStatus)
-                waitXSeconds(2)
-                print('case1')
-                print(result, timeStamp)
+                if resultHumidity < 50 and relayStatus == True:
+                    waitXSeconds(2)
+                    print('case3: atomizer is broken')
+                    print(result)
+                else:
+                    relayStatus = relayON(27, relayStatus)
+                    print(relayStatus)
+                    waitXSeconds(2)
+                    print('case1: low humidity')
+                    print(result, timeStamp)
             elif resultHumidity > 85:
                 waitXSeconds(2)
                 relayOFF(27)
-                print('case2')
+                print('case2: high humidity')
                 print(result)
-            elif resultHumidity < 50 and relayStatus == True:
-                waitXSeconds(2)
-                print('case3: atomizer is broken')
-                print(result)
+            else:
+                print("Something is wrong")
 except KeyboardInterrupt:
     print('cancelled by the user')
 finally:
