@@ -30,14 +30,15 @@ try:
     gpioSetup()
     relayStatus = False
     while True:
+        time.sleep(2)
         sensor = DHT22(17)
         result = sensor.read()
         timeStamp = time.ctime()
         resultHumidity = result.get('humidity')
         resultValidation = result.get('valid')
         if resultValidation == False:
-            time.sleep (2) #If sensor is not meausuring properly, then program sleeps for 2 sec
-            print("Collecting sensor reading every 2 seconds!")
+            time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
+            print("Collecting sensor readings in 2 seconds something went wrong!")
         else: 
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
