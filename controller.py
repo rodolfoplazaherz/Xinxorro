@@ -38,16 +38,14 @@ try:
         resultValidation = result.get('valid')
         if resultValidation == False:
             time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
-            print("Collecting sensor readings in 2 seconds something went wrong!")
         else: 
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
                     waitXSeconds(5)
-                    print('case3: atomizer is broken')
+                    print('case3: very low humidity or atomizer is broken')
                     print(result)
                 else:
                     relayStatus = relayON(27, relayStatus)
-                    print(relayStatus)
                     waitXSeconds(2)
                     print('case1: low humidity')
                     print(result, timeStamp)
@@ -55,9 +53,11 @@ try:
                 waitXSeconds(2)
                 relayOFF(27)
                 print('case2: high humidity')
-                print(result)
+            elif 80 <= resultHumidity <= 85:
+                print("Perfect Humidity")
             else:
-                print("Something is wrong")
+                pass
+        print(result)
 except KeyboardInterrupt:
     print('cancelled by the user')
 finally:
