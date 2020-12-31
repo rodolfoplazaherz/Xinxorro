@@ -1,9 +1,7 @@
-from pigpio_dht import DHT22
 import RPi.GPIO as GPIO
+import Adafruit_DHT
 import time
 import os
-
-os.system("sudo pigpiod")
 
 relayStatus = False
 
@@ -30,12 +28,11 @@ try:
     relayStatus = False
     while True:
         time.sleep(2)
-        sensor = DHT22(gpio=17, timeout_secs=2)
+        sensor = Adafruit_DHT.DHT22
         result = sensor.read()
         timeStamp = time.ctime()
-        resultHumidity = result.get('humidity')
-        resultValidation = result.get('valid')
-        if resultValidation == False:
+        resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 17)
+        if resultHumidity == None or resultTemperature == None:
             time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else: 
             if resultHumidity < 80:
@@ -56,9 +53,5 @@ try:
                 pass
 except KeyboardInterrupt:
     print('cancelled by the user')
-except AttributeError as err:
-    print("Too many simultaneous connections", err)
 finally:
     GPIO.cleanup()
-    pi.stop()
-    os.system("sudo killall pigpiod")
