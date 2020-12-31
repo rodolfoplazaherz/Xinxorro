@@ -5,8 +5,8 @@ import os
 import pigpio
 
 try:
-    os.system("sudo export PIGPIO_PORT=8888 && sudo pigpiod")
-    pi = pigpio.pi('soft', 8888)
+    os.system("sudo pigpiod")
+    pi = pigpio.pi()
 except:
     raise
 
@@ -36,7 +36,7 @@ try:
     relayStatus = False
     while True:
         time.sleep(2)
-        sensor = DHT22(17)
+        sensor = DHT22(gpio=17, timeout_secs=2, pi=pi)
         result = sensor.read()
         timeStamp = time.ctime()
         resultHumidity = result.get('humidity')
