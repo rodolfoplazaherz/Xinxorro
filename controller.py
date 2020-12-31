@@ -33,6 +33,7 @@ try:
     while True:
         sensor = DHT22(17)
         result = sensor.read()
+        print(result)
         timeStamp = time.ctime()
         resultHumidity = result.get('humidity')
         resultValidation = result.get('valid')
