@@ -5,10 +5,12 @@ import os
 import pigpio
 
 # this connects to the pigpio daemon which must be started first
-pi = pigpio.pi()
 
+os.system("export PIGPIO_PORT=8877")
+os.system("export PIGPIO_ADDR=soft")
 os.system("sudo pigpiod")
-
+pi = pigpio.pi()
+pigpio.pi('soft', 8877)
 relayStatus = False
 
 def gpioSetup():
