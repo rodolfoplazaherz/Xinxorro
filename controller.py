@@ -40,14 +40,14 @@ try:
         else: 
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
-                    waitXSeconds(5)
+                    waitXSeconds(0)
                     print('Very low humidity or atomizer is broken', result, timeStamp)
                 else:
                     relayStatus = relayON(27, relayStatus)
-                    waitXSeconds(2)
+                    waitXSeconds(0)
                     print('Low humidity', result, timeStamp)
             elif resultHumidity > 85:
-                waitXSeconds(2)
+                waitXSeconds(0)
                 relayOFF(27)
                 print('High humidity', result, timeStamp)
             elif 80 <= resultHumidity <= 85:
@@ -56,5 +56,7 @@ try:
                 pass
 except KeyboardInterrupt:
     print('cancelled by the user')
+except AttributeError:
+    print("Too many simultaneous connections")
 finally:
     GPIO.cleanup()
