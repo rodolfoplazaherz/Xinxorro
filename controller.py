@@ -11,8 +11,8 @@ print("at soft export")
 os.system("export PIGPIO_ADDR=soft")
 print("at sudo pigpiod")
 os.system("sudo pigpiod")
-pi = pigpio.pi()
-# pigpio.pi('soft', 8877)
+pi = pigpio.pi('soft', 8877)
+
 relayStatus = False
 
 def gpioSetup():
