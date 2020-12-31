@@ -31,6 +31,7 @@ try:
         sensor = Adafruit_DHT.DHT22
         timeStamp = time.ctime()
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 17)
+        resultHumidity = round(resultHumidity, 2)
         if resultHumidity == None or resultTemperature == None:
             time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else: 
