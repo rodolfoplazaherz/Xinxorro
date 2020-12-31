@@ -65,3 +65,4 @@ except AttributeError as err:
 finally:
     GPIO.cleanup()
     pi.stop()
+    os.system("sudo killall pigpiod")
