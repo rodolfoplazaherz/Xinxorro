@@ -2,6 +2,10 @@ from pigpio_dht import DHT22
 import RPi.GPIO as GPIO
 import time
 import os
+import pigpio
+
+# this connects to the pigpio daemon which must be started first
+pi = pigpio.pi()
 
 os.system("sudo pigpiod")
 
