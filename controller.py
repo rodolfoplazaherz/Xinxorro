@@ -64,3 +64,4 @@ except AttributeError as err:
     print("Too many simultaneous connections", err)
 finally:
     GPIO.cleanup()
+    pi.stop()
