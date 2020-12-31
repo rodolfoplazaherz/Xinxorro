@@ -23,7 +23,6 @@ def relayOFF(gpioNumber):
     return relayStatus
 
 def waitXSeconds(n):
-    print("Waiting {} seconds".format(n))
     time.sleep(n)
 
 try:
