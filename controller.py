@@ -30,7 +30,7 @@ try:
     relayStatus = False
     while True:
         time.sleep(2)
-        sensor = DHT22(gpio=17, timeout_secs=2, pi=pi)
+        sensor = DHT22(gpio=17, timeout_secs=2)
         result = sensor.read()
         timeStamp = time.ctime()
         resultHumidity = result.get('humidity')
