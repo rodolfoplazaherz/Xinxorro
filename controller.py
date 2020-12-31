@@ -37,10 +37,11 @@ try:
         resultValidation = result.get('valid')
         if resultValidation == False:
             time.sleep (2) #If sensor is not meausuring properly, then program sleeps for 2 sec
+            print("Collecting sensor reading every 2 seconds!")
         else: 
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
-                    waitXSeconds(2)
+                    waitXSeconds(5)
                     print('case3: atomizer is broken')
                     print(result)
                 else:
