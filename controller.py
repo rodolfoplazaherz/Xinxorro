@@ -4,14 +4,14 @@ import time
 import os
 import pigpio
 
-# this connects to the pigpio daemon which must be started first
-print("at port export")
-os.system("export PIGPIO_PORT=8877")
-print("at soft export")
-os.system("export PIGPIO_ADDR=soft")
-print("at sudo pigpiod")
-os.system("sudo pigpiod")
-pi = pigpio.pi('soft', 8877)
+try:
+    os.system("export PIGPIO_PORT=8877")
+    os.system("export PIGPIO_ADDR=soft")
+    os.system("sudo pigpiod")
+    pi = pigpio.pi('soft', 8877)
+except:
+    raise
+
 
 relayStatus = False
 
