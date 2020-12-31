@@ -42,22 +42,19 @@ try:
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
                     waitXSeconds(5)
-                    print('case3: very low humidity or atomizer is broken')
-                    print(result)
+                    print('Very low humidity or atomizer is broken', result, timeStamp)
                 else:
                     relayStatus = relayON(27, relayStatus)
                     waitXSeconds(2)
-                    print('case1: low humidity')
-                    print(result, timeStamp)
+                    print('Low humidity', result, timeStamp)
             elif resultHumidity > 85:
                 waitXSeconds(2)
                 relayOFF(27)
-                print('case2: high humidity')
+                print('High humidity', result, timeStamp)
             elif 80 <= resultHumidity <= 85:
-                print("Perfect Humidity")
+                print("Perfect Humidity", result, timeStamp)
             else:
                 pass
-        print(result)
 except KeyboardInterrupt:
     print('cancelled by the user')
 finally:
