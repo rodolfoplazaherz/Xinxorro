@@ -29,26 +29,26 @@ try:
     while True:
         time.sleep(2)
         sensor = Adafruit_DHT.DHT22
-        result = sensor.read()
         timeStamp = time.ctime()
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 17)
         if resultHumidity == None or resultTemperature == None:
             time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else: 
+            print(resultHumidity, resultTemperature, timeStamp)
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
                     waitXSeconds(0)
-                    print('Very low humidity or atomizer is broken', result, timeStamp)
+                    print('Very low humidity or atomizer is broken', timeStamp)
                 else:
                     relayStatus = relayON(27, relayStatus)
                     waitXSeconds(0)
-                    print('Low humidity', result, timeStamp)
+                    print('Low humidity', timeStamp)
             elif resultHumidity > 85:
                 waitXSeconds(0)
                 relayOFF(27)
-                print('High humidity', result, timeStamp)
+                print('High humidity', timeStamp)
             elif 80 <= resultHumidity <= 85:
-                print("Perfect Humidity", result, timeStamp)
+                print("Perfect Humidity", timeStamp)
             else:
                 pass
 except KeyboardInterrupt:
