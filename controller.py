@@ -56,7 +56,7 @@ try:
                 pass
 except KeyboardInterrupt:
     print('cancelled by the user')
-except AttributeError:
-    print("Too many simultaneous connections")
+except AttributeError as err:
+    print("Too many simultaneous connections", err)
 finally:
     GPIO.cleanup()
