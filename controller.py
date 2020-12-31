@@ -32,10 +32,11 @@ try:
         timeStamp = time.ctime()
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 17)
         resultHumidity = round(resultHumidity, 2)
+        resultTemperature = round(resultTemperature, 2)
         if resultHumidity == None or resultTemperature == None:
             time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else: 
-            print(resultHumidity, resultTemperature, timeStamp)
+            print("rh:{}, °C:{}, time:{}".format(resultHumidity, resultTemperature, timeStamp))
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
                     waitXSeconds(0)
