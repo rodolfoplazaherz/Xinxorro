@@ -1,3 +1,4 @@
+
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 import time
@@ -34,8 +35,8 @@ try:
         resultHumidity = round(resultHumidity, 2)
         resultTemperature = round(resultTemperature, 2)
         if resultHumidity == None or resultTemperature == None:
-            time.sleep (5) #If sensor is not meausuring properly, then program sleeps for 2 sec
-        else: 
+            waitXSeconds(2) #If sensor is not meausuring properly, then program sleeps for 2 sec
+        else:
             print("rh:{}, °C:{}, time:{}".format(resultHumidity, resultTemperature, timeStamp))
             if resultHumidity < 80:
                 if resultHumidity < 50 and relayStatus == True:
