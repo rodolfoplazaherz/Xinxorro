@@ -50,15 +50,15 @@ try:
     s = sched.scheduler(time.time, time.sleep)
     print("init scheduler")
     s.enter(
-        AIR_EXCHANGE_PERIOD_MINUTES,
-        AIR_EXCHANGE_DURATION_MINUTES,
+        AIR_EXCHANGE_PERIOD_MINUTES * 60,
+        AIR_EXCHANGE_DURATION_MINUTES * 60,
         relayON, argument=(27,)
     )
     print("appending task")
     s.enter(
-        AIR_EXCHANGE_DURATION_MINUTES +
-        (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES),
-        AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES,
+        AIR_EXCHANGE_DURATION_MINUTES * 60 +
+        (AIR_EXCHANGE_PERIOD_MINUTES * 60 - AIR_EXCHANGE_DURATION_MINUTES * 60),
+        AIR_EXCHANGE_PERIOD_MINUTES * 60 - AIR_EXCHANGE_DURATION_MINUTES * 60,
         relayOFF, argument=(27,)
     )
     print("appending task")
