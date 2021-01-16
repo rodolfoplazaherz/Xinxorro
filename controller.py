@@ -25,6 +25,9 @@ def waitXSeconds(n):
 try:
     gpioSetup()
     relayStatus = False
+    import csv
+    with open('historicalData.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
     while True:
         time.sleep(2)
         sensor = Adafruit_DHT.DHT22
@@ -32,6 +35,7 @@ try:
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 17)
         resultHumidity = round(resultHumidity, 2)
         resultTemperature = round(resultTemperature, 2)
+        writer.writerow([resultHumidity, resultTemperature, timeStamp])
         if resultHumidity == None or resultTemperature == None:
             waitXSeconds(2) #If sensor is not meausuring properly, then program sleeps for 2 sec
         else:
