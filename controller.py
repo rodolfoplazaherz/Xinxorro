@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import Adafruit_DHT
-import time
+import time, datetime
 import os
 import csv
 
@@ -45,10 +45,13 @@ def relayOFF(gpioNumber):
 
 def ventilatorController():
     while True:
-        relayON(VENTILATOR_GPIO)
-        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
-        relayOFF(VENTILATOR_GPIO)
-        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        hourDay = datetime.datetime.now().hour
+        print(hourDay)
+        if 6 <= hourDay <= 9:
+            relayON(VENTILATOR_GPIO)
+            time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
+            relayOFF(VENTILATOR_GPIO)
+            time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
 #se mantiene prendido el ventilador el
 
 def sensorController(relayStatus):
