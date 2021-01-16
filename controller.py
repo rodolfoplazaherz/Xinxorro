@@ -55,7 +55,7 @@ try:
         AIR_EXCHANGE_DURATION_MINUTES +
         (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES),
         AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES,
-        relayOFF, argument(27)
+        relayOFF, argument=(27)
     )
     s.run()
     # with open('historicalData.csv', 'w', newline='') as file:
