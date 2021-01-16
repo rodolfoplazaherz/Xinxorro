@@ -31,6 +31,7 @@ def gpioSetup():
         GPIO.setup(gpio, GPIO.OUT)
     return True
 
+
 #valores invertidos para activar solamente cambiar high por low y low por high en ON Y OFF
 def relayON(gpioNumber):
     GPIO.output(gpioNumber, GPIO.HIGH)
@@ -43,7 +44,11 @@ def relayOFF(gpioNumber):
 
 
 def ventilatorController():
-    pass
+    while True:
+        relayON(VENTILATOR_GPIO)
+        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)  #60.0 - ((time.time() - starttime) % 60.0)
+        relayOFF(VENTILATOR_GPIO)
+        time.sleep(AIR_EXCHANGE_PERIOD_MINUTES * 60 - AIR_EXCHANGE_DURATION_MINUTES * 60)
 
 
 def sensorController(relayStatus):
@@ -82,6 +87,7 @@ def main():
         if gpioSetup():
             relayStatus = False
             sensorController(relayStatus)
+            ventilatorController()
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
     except RuntimeError:
