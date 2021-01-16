@@ -46,9 +46,9 @@ def relayOFF(gpioNumber):
 def ventilatorController():
     while True:
         relayON(VENTILATOR_GPIO)
-        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
+        time.sleep(AIR_EXCHANGE_DURATION_MINUTES)
         relayOFF(VENTILATOR_GPIO)
-        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES * 60) - (AIR_EXCHANGE_DURATION_MINUTES * 60))
+        time.sleep(AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES)
 #se mantiene prendido el ventilador el
 
 def sensorController(relayStatus):
