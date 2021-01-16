@@ -53,7 +53,6 @@ try:
                 sensor, 17)
             resultHumidity = round(resultHumidity, 2)
             resultTemperature = round(resultTemperature, 2)
-            writer.writerow([resultHumidity, resultTemperature, timeStamp])
             if resultHumidity == None or resultTemperature == None:
                 # If sensor is not meausuring properly, then program sleeps for 2 sec
                 waitXSeconds(2)
@@ -72,12 +71,11 @@ try:
                     waitXSeconds(0)
                     relayStatus = relayOFF(27)
                     print('High humidity, turning OFF the relay')
-                # elif 80 <= resultHumidity <= 85:
-                #     relayStatus = relayOFF(27)
-                #     print("Perfect Humidity, relayOFF")
                 else:
                     pass
+            writer.writerow([resultHumidity, resultTemperature, timeStamp, relayStatus])
+
 except KeyboardInterrupt:
-    print('cancelled by the user, cleaning')
+    print("Cancelled by the user, cleaning")
 finally:
     GPIO.cleanup()
