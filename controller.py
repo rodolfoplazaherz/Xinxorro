@@ -26,6 +26,7 @@ relayStatus = False
 def gpioSetup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(27, GPIO.OUT)
+    return True
 
 
 def relayON(gpioNumber):
@@ -78,9 +79,9 @@ def sensorController(relayStatus):
 
 def main():
     try:
-        gpioSetup()
-        relayStatus = False
-        sensorController(relayStatus)
+        if gpioSetup():
+            relayStatus = False
+            sensorController(relayStatus)
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
     finally:
