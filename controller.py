@@ -51,9 +51,12 @@ try:
                 elif resultHumidity > 85 and relayStatus == True:
                     waitXSeconds(0)
                     relayStatus = relayOFF(27)
-                    print('High humidity')
-                elif 80 <= resultHumidity <= 85:
-                    print("Perfect Humidity")
+                    print('High humidity, turning OFF the relay')
+                elif 80 <= resultHumidity <= 85 and relayStatus == True:
+                    relayStatus = relayOFF(27)
+                    print("Perfect Humidity, relayOFF")
+                elif 80 <= resultHumidity <= 85 and relayStatus == False:
+                    print("Perfect Humidity, keep environment as it is!")
                 else:
                     pass
 except KeyboardInterrupt:
