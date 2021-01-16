@@ -56,7 +56,7 @@ try:
                     relayStatus = relayOFF(27)
                     print("Perfect Humidity, relayOFF")
                 elif 80 <= resultHumidity <= 85 and relayStatus == False:
-                    print("Perfect Humidity, keep environment as it is!")
+                    print("Perfect Humidity, keep environment as it is")
                 else:
                     pass
 except KeyboardInterrupt:
