@@ -43,20 +43,19 @@ def relayOFF(gpioNumber):
 def waitXSeconds(n):
     time.sleep(n)
 
-schedule.every(AIR_EXCHANGE_PERIOD_MINUTES).minutes.do(relayON(27))
-schedule.every(
-    AIR_EXCHANGE_DURATION_MINUTES + 
-    (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES)
-    ).minutes.do(relayOFF(27))
 
-#20 SEGUNDOS CADA 7 MINUTOS
+# 20 SEGUNDOS CADA 7 MINUTOS
 
-#9 CAMBIOS DE AIRE POR HORA
-
+# 9 CAMBIOS DE AIRE POR HORA
 try:
     initTime = time.time()
     gpioSetup()
     relayStatus = False
+    schedule.every(AIR_EXCHANGE_PERIOD_MINUTES).minutes.do(relayON(27))
+    schedule.every(
+        AIR_EXCHANGE_DURATION_MINUTES +
+        (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES)
+    ).minutes.do(relayOFF(27))
     schedule.run_pending()
     # with open('historicalData.csv', 'w', newline='') as file:
     #     writer = csv.writer(file)
