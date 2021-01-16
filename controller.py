@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import Adafruit_DHT
 import time
 import os
-import schedule
+import sched
 import csv
 
 
@@ -12,12 +12,10 @@ TENT_WIDTH_M = 0.6
 TENT_HEIGHT_M = 1.6
 TENT_VOLUME_M3 = TENT_LENGHT_M * TENT_WIDTH_M * TENT_HEIGHT_M
 FAN_CAPACITY_M3_PER_HOUR = 100
-FAN_CAPACITY_M3_PER_MINUTE = FAN_CAPACITY_M3_PER_HOUR//60
+FAN_CAPACITY_M3_PER_MINUTE = FAN_CAPACITY_M3_PER_HOUR/60
 AIR_EXCHANGES_PER_HOUR = 9
-AIR_EXCHANGE_PERIOD_MINUTES = 60//AIR_EXCHANGES_PER_HOUR
-AIR_EXCHANGE_DURATION_MINUTES = TENT_VOLUME_M3//FAN_CAPACITY_M3_PER_MINUTE
-
-AIR_EXCHANGE_PERIOD_MINUTES = 0.5
+AIR_EXCHANGE_PERIOD_MINUTES = 60/AIR_EXCHANGES_PER_HOUR
+AIR_EXCHANGE_DURATION_MINUTES = TENT_VOLUME_M3/FAN_CAPACITY_M3_PER_MINUTE
 
 
 relayStatus = False
@@ -44,19 +42,22 @@ def waitXSeconds(n):
     time.sleep(n)
 
 
-# 20 SEGUNDOS CADA 7 MINUTOS
-
-# 9 CAMBIOS DE AIRE POR HORA
 try:
     initTime = time.time()
     gpioSetup()
     relayStatus = False
-    schedule.every(AIR_EXCHANGE_PERIOD_MINUTES).minutes.do(relayON(27))
-    schedule.every(
+    s = sched.scheduler(time.time, time.sleep)
+    s.enter(
+        AIR_EXCHANGE_PERIOD_MINUTES,
+        AIR_EXCHANGE_DURATION_MINUTES,
+        relayON, argument=(27))
+    s.enter(
         AIR_EXCHANGE_DURATION_MINUTES +
-        (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES)
-    ).minutes.do(relayOFF(27))
-    schedule.run_pending()
+        (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES),
+        AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES,
+        relayOFF, argument(27)
+    )
+    s.run()
     # with open('historicalData.csv', 'w', newline='') as file:
     #     writer = csv.writer(file)
     #     while True:
