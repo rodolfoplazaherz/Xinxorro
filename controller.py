@@ -11,15 +11,13 @@ def gpioSetup():
     GPIO.setup(27, GPIO.OUT)
     GPIO.output(27,GPIO.LOW)
 
-def relayON(gpioNumber, relayStatus):
+def relayON(gpioNumber):
     GPIO.output(gpioNumber, GPIO.HIGH)
-    relayStatus = True
-    return relayStatus
+    return True
 
 def relayOFF(gpioNumber):
     GPIO.output(gpioNumber, GPIO.LOW)
-    relayStatus = False
-    return relayStatus
+    return False
 
 def waitXSeconds(n):
     time.sleep(n)
@@ -43,12 +41,12 @@ try:
                     waitXSeconds(0)
                     print('Very low humidity or atomizer is broken')
                 else:
-                    relayStatus = relayON(27, relayStatus)
+                    relayStatus = relayON(27)
                     waitXSeconds(0)
                     print('Low humidity')
-            elif resultHumidity > 85:
+            elif resultHumidity > 85 and relayStatus == True:
                 waitXSeconds(0)
-                relayOFF(27)
+                relayStatus = relayOFF(27)
                 print('High humidity')
             elif 80 <= resultHumidity <= 85:
                 print("Perfect Humidity")
