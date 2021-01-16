@@ -84,6 +84,8 @@ def main():
             sensorController(relayStatus)
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
+    except RuntimeError:
+        print("The GPIOs specified are not connected")
     finally:
         GPIO.cleanup()
 
