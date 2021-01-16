@@ -48,7 +48,7 @@ def ventilatorController():
         relayON(VENTILATOR_GPIO)
         time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)  #60.0 - ((time.time() - starttime) % 60.0)
         relayOFF(VENTILATOR_GPIO)
-        time.sleep(AIR_EXCHANGE_PERIOD_MINUTES * 60 - AIR_EXCHANGE_DURATION_MINUTES * 60)
+        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES * 60) - (AIR_EXCHANGE_DURATION_MINUTES * 60))
 
 
 def sensorController(relayStatus):
