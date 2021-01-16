@@ -46,19 +46,24 @@ try:
     initTime = time.time()
     gpioSetup()
     relayStatus = False
+    
     s = sched.scheduler(time.time, time.sleep)
+    print("init scheduler")
     s.enter(
         AIR_EXCHANGE_PERIOD_MINUTES,
         AIR_EXCHANGE_DURATION_MINUTES,
         relayON, argument=(27,)
     )
+    print("appending task")
     s.enter(
         AIR_EXCHANGE_DURATION_MINUTES +
         (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES),
         AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES,
         relayOFF, argument=(27,)
     )
+    print("appending task")
     s.run()
+    print("running task")
     # with open('historicalData.csv', 'w', newline='') as file:
     #     writer = csv.writer(file)
     #     while True:
