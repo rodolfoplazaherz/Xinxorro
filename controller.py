@@ -34,12 +34,12 @@ def gpioSetup():
 
 #valores invertidos para activar solamente cambiar high por low y low por high en ON Y OFF
 def relayON(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.HIGH)
+    GPIO.output(gpioNumber, GPIO.LOW)
     return True
 
 
 def relayOFF(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.LOW)
+    GPIO.output(gpioNumber, GPIO.HIGH)
     return False
 
 
