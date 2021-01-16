@@ -23,16 +23,15 @@ def gpioSetup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(27, GPIO.OUT)
     GPIO.output(27, GPIO.LOW)
-    return print("Setup Complete!")
 
 
 def relayON(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.HIGH)
+    GPIO.output(gpioNumber, GPIO.LOW)
     return True
 
 
 def relayOFF(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.LOW)
+    GPIO.output(gpioNumber, GPIO.HIGH)
     return False
 
 
@@ -69,13 +68,13 @@ try:
                         relayStatus = relayON(27)
                         waitXSeconds(0)
                         print('Low humidity')
-                elif resultHumidity > 85 and relayStatus == True:
+                elif resultHumidity > 80:
                     waitXSeconds(0)
                     relayStatus = relayOFF(27)
                     print('High humidity, turning OFF the relay')
-                elif 80 <= resultHumidity <= 85:
-                    relayStatus = relayOFF(27)
-                    print("Perfect Humidity, relayOFF")
+                # elif 80 <= resultHumidity <= 85:
+                #     relayStatus = relayOFF(27)
+                #     print("Perfect Humidity, relayOFF")
                 else:
                     pass
 except KeyboardInterrupt:
