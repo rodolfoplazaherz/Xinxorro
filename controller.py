@@ -5,7 +5,6 @@ import os
 
 relayStatus = False
 
-
 def gpioSetup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(27, GPIO.OUT)
@@ -13,12 +12,12 @@ def gpioSetup():
 
 
 def relayON(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.HIGH)
+    GPIO.output(gpioNumber, GPIO.LOW)
     return True
 
 
 def relayOFF(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.LOW)
+    GPIO.output(gpioNumber, GPIO.HIGH)
     return False
 
 
@@ -65,6 +64,6 @@ try:
                 else:
                     pass
 except KeyboardInterrupt:
-    print('cancelled by the user')
+    print('cancelled by the user, cleaning')
 finally:
     GPIO.cleanup()
