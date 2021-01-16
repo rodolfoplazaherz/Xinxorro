@@ -38,10 +38,6 @@ def relayOFF(gpioNumber):
     return False
 
 
-def waitXSeconds(n):
-    time.sleep(n)
-
-
 def ventilatorController():
     pass
 
@@ -58,20 +54,20 @@ def sensorController(relayStatus):
             resultTemperature = round(resultTemperature, 2)
             if resultHumidity == None or resultTemperature == None:
                 # If sensor is not meausuring properly, then program sleeps for 2 sec
-                waitXSeconds(2)
+                time.sleep(2)
             else:
                 print("rh:{}, °C:{}, time:{}".format(
                     resultHumidity, resultTemperature, timeStamp))
                 if resultHumidity < 80:
                     if resultHumidity < 50 and relayStatus == True:
-                        waitXSeconds(0)
+                        time.sleep(0)
                         print('Very low humidity or atomizer is broken')
                     else:
                         relayStatus = relayON(HUMIDIFIER_GPIO)
-                        waitXSeconds(0)
+                        time.sleep(0)
                         print('Low humidity')
                 elif resultHumidity > 80:
-                    waitXSeconds(0)
+                    time.sleep(0)
                     relayStatus = relayOFF(HUMIDIFIER_GPIO)
                     print('High humidity, turning OFF the relay')
                 else:
