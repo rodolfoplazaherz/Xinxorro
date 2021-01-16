@@ -9,6 +9,7 @@ def gpioSetup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(27, GPIO.OUT)
     GPIO.output(27, GPIO.LOW)
+    return print("Setup Complete!")
 
 
 def relayON(gpioNumber):
@@ -26,6 +27,7 @@ def waitXSeconds(n):
 
 
 try:
+    initTime = time.time()
     gpioSetup()
     relayStatus = False
     import csv
@@ -34,7 +36,11 @@ try:
         while True:
             time.sleep(2)
             sensor = Adafruit_DHT.DHT22
-            timeStamp = time.ctime()
+            timeStamp = time.time()
+            # activar el ventilador cada hora
+            timeElapsed = time.time() - initTime
+            print(initTime, timeElapsed)
+
             resultHumidity, resultTemperature = Adafruit_DHT.read_retry(
                 sensor, 17)
             resultHumidity = round(resultHumidity, 2)
