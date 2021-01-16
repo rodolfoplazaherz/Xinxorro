@@ -50,12 +50,13 @@ try:
     s.enter(
         AIR_EXCHANGE_PERIOD_MINUTES,
         AIR_EXCHANGE_DURATION_MINUTES,
-        relayON, argument=(27))
+        relayON, argument=(27,)
+    )
     s.enter(
         AIR_EXCHANGE_DURATION_MINUTES +
         (AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES),
         AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES,
-        relayOFF, argument=(27)
+        relayOFF, argument=(27,)
     )
     s.run()
     # with open('historicalData.csv', 'w', newline='') as file:
