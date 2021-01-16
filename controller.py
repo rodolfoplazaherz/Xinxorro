@@ -47,7 +47,7 @@ def ventilatorController():
     while True:
         hourDay = datetime.datetime.now().hour
         print(hourDay)
-        if 6 <= hourDay <= 9:
+        if not 6 <= hourDay <= 9:
             relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
             relayOFF(VENTILATOR_GPIO)
