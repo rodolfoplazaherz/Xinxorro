@@ -22,7 +22,6 @@ relayStatus = False
 def gpioSetup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(27, GPIO.OUT)
-    GPIO.output(27, GPIO.LOW)
 
 
 def relayON(gpioNumber):
