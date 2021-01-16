@@ -31,7 +31,7 @@ def gpioSetup():
         GPIO.setup(gpio, GPIO.OUT)
     return True
 
-
+#valores invertidos para activar solamente cambiar high por low y low por high en ON Y OFF
 def relayON(gpioNumber):
     GPIO.output(gpioNumber, GPIO.HIGH)
     return True
@@ -65,15 +65,12 @@ def sensorController(relayStatus):
                 if resultHumidity < 80:
                     if resultHumidity < 50 and relayStatus == True:
                         time.sleep(0)
-                        print('Very low humidity or atomizer is broken')
                     else:
                         relayStatus = relayON(HUMIDIFIER_GPIO)
                         time.sleep(0)
-                        print('Low humidity')
                 elif resultHumidity > 80:
                     time.sleep(0)
                     relayStatus = relayOFF(HUMIDIFIER_GPIO)
-                    print('High humidity, turning OFF the relay')
                 else:
                     pass
             writer.writerow(
@@ -88,7 +85,7 @@ def main():
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
     except RuntimeError:
-        print("The GPIOs specified are not connected")
+        print("The GPIOs specified have not been set up")
     finally:
         GPIO.cleanup()
 
