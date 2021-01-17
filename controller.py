@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import Adafruit_DHT
-import time, datetime
+import time
+import datetime
 import os
 import csv
 
@@ -32,7 +33,7 @@ def gpioSetup():
     return True
 
 
-#valores invertidos para activar solamente cambiar high por low y low por high en ON Y OFF
+# valores invertidos para activar solamente cambiar high por low y low por high en ON Y OFF
 def relayON(gpioNumber):
     GPIO.output(gpioNumber, GPIO.LOW)
     return True
@@ -44,14 +45,19 @@ def relayOFF(gpioNumber):
 
 
 def ventilatorController():
+    i = 0
     while True:
-        hourDay = datetime.datetime.now().hour
-        print(hourDay)
-        if not 6 <= hourDay <= 9:
+        currentTime = datetime.datetime.now()
+        print(currentTime, currentTime.hour)
+        print(i)
+        if not 6 <= currentTime.hour <= 9:
             relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
             relayOFF(VENTILATOR_GPIO)
-            time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES -
+                    AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        i += 1
+
 
 def sensorController(relayStatus):
     with open('historicalData.csv', 'w', newline='') as file:
