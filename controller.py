@@ -48,7 +48,7 @@ def ventilatorController(relayStatus):
     i = 0
     while True:
         currentTime = datetime.datetime.now()
-        print(currentTime - datetime.datetime.now(), currentTime.hour, i)
+        print(currentTime.time() - datetime.datetime.now().time(), currentTime.hour, i)
         if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
             relayStatus = relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
@@ -63,7 +63,7 @@ def sensorController(relayStatus):
         writer = csv.writer(file)
         while True:
             sensor = Adafruit_DHT.DHT22
-            timeStamp = time.time()
+            timeStamp = datetime.datetime.now()
             resultHumidity, resultTemperature = Adafruit_DHT.read_retry(
                 sensor, SENSOR_DHT22_GPIO)
             resultHumidity = round(resultHumidity, 2)
