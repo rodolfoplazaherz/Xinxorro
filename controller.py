@@ -35,12 +35,12 @@ def gpioSetup():
 
 
 def relayON(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.LOW)
+    GPIO.output(gpioNumber, GPIO.HIGH)
     return True
 
 
 def relayOFF(gpioNumber):
-    GPIO.output(gpioNumber, GPIO.HIGH)
+    GPIO.output(gpioNumber, GPIO.LOW)
     return False
 
 # this functions is not working properly, the relay stays on
@@ -50,23 +50,13 @@ def ventilatorController(relayStatus):
     i = 0
     while True:
         print("TURNING ON")
-        s.enter(
-            5,
-            1,
-            relayON,
-            argument=(VENTILATOR_GPIO,))
-        s.run()
-        time.sleep(5)
+        relayON(VENTILATOR_GPIO)
+        time.sleep(2)
         print("TURNING OFF")
-        s.enter(
-            10,
-            1,
-            relayOFF,
-            argument=(VENTILATOR_GPIO,))
-        s.run()
-
-        print("NEXT")
+        relayOFF(VENTILATOR_GPIO)
+        time.sleep(5)
         i += 1
+        print("NEXT", i)
 
         # if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
         #     relayStatus = relayON(VENTILATOR_GPIO)
