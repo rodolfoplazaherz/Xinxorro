@@ -28,8 +28,9 @@ relayStatus = False
 
 def gpioSetup():
     GPIO.setmode(GPIO.BCM)
-    for gpio in ELEMENTS_LIST_GPIO:
-        GPIO.setup(gpio, GPIO.OUT)
+    # for gpio in ELEMENTS_LIST_GPIO:
+    #     GPIO.setup(gpio, GPIO.OUT)
+    GPIO.setup(27, GPIO.OUT)
     return True
 
 
@@ -47,8 +48,7 @@ def ventilatorController():
     i = 0
     while True:
         currentTime = datetime.datetime.now()
-        print(currentTime, currentTime.hour)
-        print(i)
+        print(currentTime, currentTime.hour, i)
         if 6 <= currentTime.hour <= 8 == False:
             relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
