@@ -48,7 +48,7 @@ def ventilatorController(relayStatus):
     i = 0
     while True:
         currentTime = datetime.datetime.now()
-        print(currentTime.time() - datetime.datetime.now().time(), currentTime.hour, i)
+        print(currentTime.second - datetime.datetime.now().second, currentTime.hour, i)
         if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
             relayStatus = relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
