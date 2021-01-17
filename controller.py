@@ -33,7 +33,6 @@ def gpioSetup():
     return True
 
 
-# valores invertidos para activar solamente cambiar high por low y low por high en ON Y OFF
 def relayON(gpioNumber):
     GPIO.output(gpioNumber, GPIO.HIGH)
     return True
@@ -50,7 +49,7 @@ def ventilatorController():
         currentTime = datetime.datetime.now()
         print(currentTime, currentTime.hour)
         print(i)
-        if not 6 <= currentTime.hour <= 9:
+        if 6 <= currentTime.hour <= 8 == False:
             relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
             relayOFF(VENTILATOR_GPIO)
