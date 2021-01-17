@@ -4,6 +4,7 @@ import time
 import datetime
 import os
 import csv
+import sched
 
 MUSHROOM_TYPE = ""
 TENT_LENGHT_M = 0.6
@@ -24,6 +25,7 @@ ELEMENTS_LIST_GPIO = [HUMIDIFIER_GPIO, VENTILATOR_GPIO, SENSOR_DHT22_GPIO]
 
 
 relayStatus = False
+s = sched.scheduler(time.time, time.sleep)
 
 
 def gpioSetup():
@@ -43,19 +45,33 @@ def relayOFF(gpioNumber):
     GPIO.output(gpioNumber, GPIO.HIGH)
     return False
 
+# this functions is not working properly, the relay stays on
+
 
 def ventilatorController(relayStatus):
     i = 0
     while True:
         currentTime = datetime.datetime.now()
-        print(currentTime.second - datetime.datetime.now().second, currentTime.hour, i)
-        if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
-            relayStatus = relayON(VENTILATOR_GPIO)
-            time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
-            relayStatus = relayOFF(VENTILATOR_GPIO)
+        print(currentTime.second - datetime.datetime.now().second,
+              currentTime.hour, i, relayStatus)
+        s.enter(
+            AIR_EXCHANGE_DURATION_MINUTES * 60,
+            1,
+            relayON,
+            argument=(VENTILATOR_GPIO,))
+        s.run()
+        relayOFF(VENTILATOR_GPIO)
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES -
                     AIR_EXCHANGE_DURATION_MINUTES) * 60)
         i += 1
+
+        # if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
+        #     relayStatus = relayON(VENTILATOR_GPIO)
+        #     time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
+        #     relayStatus = relayOFF(VENTILATOR_GPIO)
+        # time.sleep((AIR_EXCHANGE_PERIOD_MINUTES -
+        #             AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        # i += 1
 
 
 def sensorController(relayStatus):
