@@ -52,7 +52,6 @@ def ventilatorController():
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
             relayOFF(VENTILATOR_GPIO)
             time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
-#se mantiene prendido el ventilador el
 
 def sensorController(relayStatus):
     with open('historicalData.csv', 'w', newline='') as file:
@@ -74,11 +73,11 @@ def sensorController(relayStatus):
                     if resultHumidity < 50 and relayStatus == True:
                         time.sleep(0)
                     else:
-                        relayStatus = relayON(HUMIDIFIER_GPIO)
+                        relayStatus = relayOFF(HUMIDIFIER_GPIO)
                         time.sleep(0)
                 elif resultHumidity > 80:
                     time.sleep(0)
-                    relayStatus = relayOFF(HUMIDIFIER_GPIO)
+                    relayStatus = relayON(HUMIDIFIER_GPIO)
                 else:
                     pass
             writer.writerow(
