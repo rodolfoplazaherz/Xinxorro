@@ -44,15 +44,15 @@ def relayOFF(gpioNumber):
     return False
 
 
-def ventilatorController():
+def ventilatorController(relayStatus):
     i = 0
     while True:
         currentTime = datetime.datetime.now()
         print(currentTime, currentTime.hour, i)
-        if 6 <= currentTime.hour <= 8 == False:
-            relayON(VENTILATOR_GPIO)
+        if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
+            relayStatus = relayON(VENTILATOR_GPIO)
             time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
-            relayOFF(VENTILATOR_GPIO)
+            relayStatus = relayOFF(VENTILATOR_GPIO)
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES -
                     AIR_EXCHANGE_DURATION_MINUTES) * 60)
         i += 1
@@ -94,7 +94,7 @@ def main():
         if gpioSetup():
             relayStatus = False
             # sensorController(relayStatus)
-            ventilatorController()
+            ventilatorController(relayStatus)
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
     except RuntimeError:
