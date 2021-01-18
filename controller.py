@@ -51,11 +51,11 @@ def ventilatorController(relayStatus):
     while True:
         print("TURNING ON")
         relayON(VENTILATOR_GPIO)
-        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
+        time.sleep(2)#(AIR_EXCHANGE_DURATION_MINUTES * 60)
         print("TURNING OFF")
         relayOFF(VENTILATOR_GPIO)
-        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES -
-                    AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        time.sleep(5)#((AIR_EXCHANGE_PERIOD_MINUTES -
+                  #  AIR_EXCHANGE_DURATION_MINUTES) * 60)
         i += 1
         print("NEXT", i)
 
