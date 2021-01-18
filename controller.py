@@ -85,14 +85,12 @@ def sensorController(relayStatus):
                 print("rh:{}, °C:{}, time:{}".format(
                     resultHumidity, resultTemperature, timeStamp))
                 if resultHumidity < 80:
-                    if resultHumidity < 50 and relayStatus == True:
-                        time.sleep(0)
+                    if relayStatus == True:
+                        print("Check integrity of the environment")
                     else:
-                        relayStatus = relayOFF(HUMIDIFIER_GPIO)
-                        time.sleep(0)
+                        relayStatus = relayON(HUMIDIFIER_GPIO)
                 elif resultHumidity > 80:
-                    time.sleep(0)
-                    relayStatus = relayON(HUMIDIFIER_GPIO)
+                    relayStatus = relayOFF(HUMIDIFIER_GPIO)
                 else:
                     pass
             writer.writerow(
