@@ -8,16 +8,9 @@ from ConfigurationHandler import loadConfigData
 
 Config = loadConfigData()
 
-MUSHROOM_TYPE = Config.get("MUSHROOM_TYPE")
-TENT_LENGHT_M = Config.get("TENT_LENGHT_M")
-TENT_WIDTH_M = Config.get("TENT_WIDTH_M")
-TENT_HEIGHT_M = Config.get("TENT_HEIGHT_M")
-FAN_CAPACITY_M3_PER_HOUR = Config.get("FAN_CAPACITY_M3_PER_HOUR")
-AIR_EXCHANGES_PER_HOUR = Config.get("AIR_EXCHANGES_PER_HOUR")
-
-TENT_VOLUME_M3 = TENT_LENGHT_M * TENT_WIDTH_M * TENT_HEIGHT_M
-FAN_CAPACITY_M3_PER_MINUTE = FAN_CAPACITY_M3_PER_HOUR/60
-AIR_EXCHANGE_PERIOD_MINUTES = 60/AIR_EXCHANGES_PER_HOUR
+TENT_VOLUME_M3 = Config.get("TENT_LENGHT_M") * Config.get("TENT_WIDTH_M") * Config.get("TENT_HEIGHT_M")
+FAN_CAPACITY_M3_PER_MINUTE = Config.get("FAN_CAPACITY_M3_PER_HOUR")/60
+AIR_EXCHANGE_PERIOD_MINUTES = 60/Config.get("AIR_EXCHANGES_PER_HOUR")
 AIR_EXCHANGE_DURATION_MINUTES = TENT_VOLUME_M3/FAN_CAPACITY_M3_PER_MINUTE
 
 
@@ -36,8 +29,6 @@ def relayON(gpioNumber):
 def relayOFF(gpioNumber):
     GPIO.output(gpioNumber, GPIO.HIGH)
     return False
-
-# this functions is not working properly, the relay stays on
 
 
 def ventilatorController(relayStatus):
