@@ -24,14 +24,14 @@ def gpioSetup():
 
 def relayON(gpioNumber):
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(gpioNumber, GPIO.OUT)
+    GPIO.setup(gpio, GPIO.OUT)
     GPIO.output(gpioNumber, GPIO.LOW)
     return True
 
 
 def relayOFF(gpioNumber):
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(gpioNumber, GPIO.OUT)
+    GPIO.setup(gpio, GPIO.OUT)
     GPIO.output(gpioNumber, GPIO.HIGH)
     return False
 
@@ -39,11 +39,11 @@ def relayOFF(gpioNumber):
 def ventilatorController(relayStatus):
     while True:
         print("TURNING ON")
-        relayON(5)#Config.get("VENTILATOR_GPIO"))
-        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
+        relayON(Config.get("VENTILATOR_GPIO"))
+        time.sleep(5)#AIR_EXCHANGE_DURATION_MINUTES * 60)
         print("TURNING OFF")
-        relayOFF(10)#Config.get("VENTILATOR_GPIO"))
-        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        relayOFF(Config.get("VENTILATOR_GPIO"))
+        time.sleep(10)#(AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
         print("NEXT")
 
 
