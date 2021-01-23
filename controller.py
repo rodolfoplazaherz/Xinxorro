@@ -24,12 +24,14 @@ def gpioSetup():
 
 def relayON(gpioNumber):
     GPIO.setmode(GPIO.BCM)
+    GPIO.setup(gpioNumber, GPIO.OUT)
     GPIO.output(gpioNumber, GPIO.LOW)
     return True
 
 
 def relayOFF(gpioNumber):
     GPIO.setmode(GPIO.BCM)
+    GPIO.setup(gpioNumber, GPIO.OUT)
     GPIO.output(gpioNumber, GPIO.HIGH)
     return False
 
