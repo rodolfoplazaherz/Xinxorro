@@ -74,7 +74,7 @@ def main():
     try:
         if gpioSetup():
             relayStatus = False
-            # sensorController(relayStatus)
+            sensorController(relayStatus)
             ventilatorController(relayStatus)
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
