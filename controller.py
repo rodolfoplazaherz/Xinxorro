@@ -36,21 +36,12 @@ def ventilatorController(relayStatus):
     while True:
         print("TURNING ON")
         relayON(Config.get("VENTILATOR_GPIO"))
-        time.sleep(5)#(AIR_EXCHANGE_DURATION_MINUTES * 60)
+        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
         print("TURNING OFF")
         relayOFF(Config.get("VENTILATOR_GPIO"))
-        time.sleep(10)#((AIR_EXCHANGE_PERIOD_MINUTES -
-                  #  AIR_EXCHANGE_DURATION_MINUTES) * 60)
+        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
         i += 1
         print("NEXT", i)
-
-        # if 6 <= currentTime.hour <= 8 == False and relayStatus == False:
-        #     relayStatus = relayON(VENTILATOR_GPIO)
-        #     time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
-        #     relayStatus = relayOFF(VENTILATOR_GPIO)
-        # time.sleep((AIR_EXCHANGE_PERIOD_MINUTES -
-        #             AIR_EXCHANGE_DURATION_MINUTES) * 60)
-        # i += 1
 
 
 def sensorController(relayStatus):
@@ -63,15 +54,15 @@ def sensorController(relayStatus):
                 sensor, Config.get("SENSOR_DHT22_GPIO"))
             resultHumidity = round(resultHumidity, 2)
             resultTemperature = round(resultTemperature, 2)
-            if resultHumidity == None or resultTemperature == None:
-                # If sensor is not meausuring properly, then program sleeps for 2 sec
+            if resultHumidity == None or resultTemperature == None or resultHumidity > 100:
+                print("Faulty Measurement")
                 time.sleep(2)
             else:
                 print("rh:{}, °C:{}, time:{}".format(
                     resultHumidity, resultTemperature, timeStamp))
-                if resultHumidity < 80:
+                if resultHumidity < Config.get("IDEAL_HUMIDITY_POINT"):
                     relayStatus = relayON(Config.get("HUMIDIFIER_GPIO"))
-                elif resultHumidity > 80:
+                elif resultHumidity > Config.get("IDEAL_HUMIDITY_POINT"):
                     relayStatus = relayOFF(Config.get("HUMIDIFIER_GPIO"))
                 else:
                     pass
@@ -83,8 +74,8 @@ def main():
     try:
         if gpioSetup():
             relayStatus = False
-            sensorController(relayStatus)
-            # ventilatorController(relayStatus)
+            # sensorController(relayStatus)
+            ventilatorController(relayStatus)
     except KeyboardInterrupt:
         print("Cancelled by the user, cleaning")
     except RuntimeError:
