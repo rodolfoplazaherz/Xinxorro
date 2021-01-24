@@ -80,8 +80,6 @@ def main():
         t2.start()
     except RuntimeError:
         print("The GPIOs specified have not been set up")
-    finally:
-        GPIO.cleanup()
 
 
 try:
@@ -89,7 +87,6 @@ try:
         main()
 except KeyboardInterrupt:
     print("Cancelled by the user, cleaning")
-    GPIO.cleanup()
 finally:
     GPIO.cleanup()
 
