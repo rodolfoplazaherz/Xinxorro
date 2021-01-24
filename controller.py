@@ -67,7 +67,7 @@ def sensorController(relayStatus):
                 relayStatus = relayOFF(Config.get("HUMIDIFIER_GPIO"))
             else:
                 pass
-        time.sleep(30)
+        time.sleep(5)
 
 
 def main():
@@ -80,6 +80,8 @@ def main():
         t2.start()
     except RuntimeError:
         print("The GPIOs specified have not been set up")
+    finally:
+        GPIO.cleanup()
 
 
 try:
@@ -87,6 +89,7 @@ try:
         main()
 except KeyboardInterrupt:
     print("Cancelled by the user, cleaning")
+    GPIO.cleanup()
 finally:
     GPIO.cleanup()
 

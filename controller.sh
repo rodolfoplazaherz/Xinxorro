@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python3 controller.py
+python3 ./controller.py
