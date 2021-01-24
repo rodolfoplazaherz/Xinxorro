@@ -38,10 +38,10 @@ def relayOFF(gpioNumber):
 
 def ventilatorController(relayStatus):
     while True:
-        print("TURNING ON")
+        print("TURNING VENTILATOR ON")
         relayON(Config.get("VENTILATOR_GPIO"))
         time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
-        print("TURNING OFF")
+        print("TURNING VENTILATOR OFF")
         relayOFF(Config.get("VENTILATOR_GPIO"))
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
         print("NEXT")
@@ -67,6 +67,7 @@ def sensorController(relayStatus):
                 relayStatus = relayOFF(Config.get("HUMIDIFIER_GPIO"))
             else:
                 pass
+        time.sleep(30)
 
 
 def main():
@@ -88,6 +89,8 @@ try:
         main()
 except KeyboardInterrupt:
     print("Cancelled by the user, cleaning")
+    GPIO.cleanup()
+finally:
     GPIO.cleanup()
 
 
