@@ -16,6 +16,7 @@ AIR_EXCHANGE_DURATION_MINUTES = TENT_VOLUME_M3/FAN_CAPACITY_M3_PER_MINUTE
 
 
 def gpioSetup():
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_GPIO"), Config.get("SENSOR_DHT22_GPIO")]:
         GPIO.setup(gpio, GPIO.OUT)
