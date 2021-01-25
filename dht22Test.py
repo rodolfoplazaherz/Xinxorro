@@ -10,8 +10,11 @@ try:
         sensor = Adafruit_DHT.DHT22
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(
             sensor, 27)
-        resultHumidity = round(resultHumidity, 2)
-        resultTemperature = round(resultTemperature, 2)
+        if resultHumidity or resultTemperature == None:
+            pass
+        else:
+            resultHumidity = round(resultHumidity, 2)
+            resultTemperature = round(resultTemperature, 2)
         print(resultHumidity, resultTemperature, i)
         i += 1
         time.sleep(10)
