@@ -8,8 +8,8 @@ try:
     i=0
     while True:
         sensor = Adafruit_DHT.DHT22
-        resultHumidity, resultTemperature = Adafruit_DHT.read_retry(
-            sensor, 27)
+        resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 27)
+        print(resultHumidity, resultTemperature)
         if resultHumidity or resultTemperature == None:
             pass
         else:
@@ -17,9 +17,8 @@ try:
             resultTemperature = round(resultTemperature, 2)
         print(resultHumidity, resultTemperature, i)
         i += 1
-        time.sleep(10)
+        time.sleep(5)
 except KeyboardInterrupt:
     print("cancelled")
-    GPIO.cleanup()
 finally:
     GPIO.cleanup()
