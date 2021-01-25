@@ -16,7 +16,6 @@ try:
             resultTemperature = round(resultTemperature, 2)
         print(resultHumidity, resultTemperature, i)
         i += 1
-        time.sleep(5)
 except KeyboardInterrupt:
     print("cancelled")
 finally:
