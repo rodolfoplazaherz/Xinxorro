@@ -9,7 +9,6 @@ try:
     while True:
         sensor = Adafruit_DHT.DHT22
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(sensor, 27)
-        print(resultHumidity, resultTemperature)
         if resultHumidity or resultTemperature == None:
             pass
         else:
