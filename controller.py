@@ -17,6 +17,7 @@ AIR_EXCHANGE_DURATION_MINUTES = TENT_VOLUME_M3/FAN_CAPACITY_M3_PER_MINUTE
 
 def gpioSetup():
     GPIO.setwarnings(False)
+    GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_GPIO"), Config.get("SENSOR_DHT22_GPIO")]:
         GPIO.setup(gpio, GPIO.OUT)
@@ -80,8 +81,8 @@ def main():
         t2.start()
     except RuntimeError:
         print("The GPIOs specified have not been set up")
-    finally:
-        GPIO.cleanup()
+    except TypeError:
+        print("A sensor is not reading properly")
 
 
 try:
@@ -89,7 +90,6 @@ try:
         main()
 except KeyboardInterrupt:
     print("Cancelled by the user, cleaning")
-    GPIO.cleanup()
 finally:
     GPIO.cleanup()
 
