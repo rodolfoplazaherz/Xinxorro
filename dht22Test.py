@@ -12,8 +12,8 @@ try:
         if resultHumidity and resultTemperature == None:
             pass
         else:
-            resultHumidity = round(resultHumidity, 2)
-            resultTemperature = round(resultTemperature, 2)
+            resultHumidity = round(resultHumidity, 3)
+            resultTemperature = round(resultTemperature, 3)
         print(resultHumidity, resultTemperature, i)
         i += 1
 except KeyboardInterrupt:
