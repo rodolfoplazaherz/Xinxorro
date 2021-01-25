@@ -55,7 +55,7 @@ def sensorController(relayStatus):
             sensor, Config.get("SENSOR_DHT22_GPIO"))
         if (resultHumidity and resultTemperature == None) or resultHumidity > 100:
             print("Faulty Measurement")
-            gpioSetup()
+            time.sleep(5)
         else:
             resultHumidity = round(resultHumidity, 2)
             resultTemperature = round(resultTemperature, 2)
@@ -67,7 +67,6 @@ def sensorController(relayStatus):
                 relayStatus = relayOFF(Config.get("HUMIDIFIER_GPIO"))
             else:
                 pass
-        time.sleep(5)
 
 
 def main():
