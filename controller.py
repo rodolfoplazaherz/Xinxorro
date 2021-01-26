@@ -59,8 +59,8 @@ def sensorController(relayStatus):
             print("Faulty Measurement")
             time.sleep(10)
         else:
-            resultHumidity = round(resultHumidity, 2)
-            resultTemperature = round(resultTemperature, 2)
+            resultHumidity = round(resultHumidity)
+            resultTemperature = round(resultTemperature)
             print("rh:{}, °C:{}, time:{}".format(
                 resultHumidity, resultTemperature, timeStamp))
             if resultHumidity < Config.get("IDEAL_HUMIDITY_POINT"):

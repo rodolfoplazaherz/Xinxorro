@@ -12,8 +12,8 @@ try:
         if resultHumidity and resultTemperature == None:
             pass
         else:
-            resultHumidity = round(resultHumidity, 3)
-            resultTemperature = round(resultTemperature, 3)
+            resultHumidity = round(resultHumidity)
+            resultTemperature = round(resultTemperature)
         print(resultHumidity, resultTemperature, i)
         i += 1
         time.sleep(5)
