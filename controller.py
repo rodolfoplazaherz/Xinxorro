@@ -47,7 +47,7 @@ def ventilatorController(relayStatus):
         relayOFF(Config.get("VENTILATOR_GPIO"))
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
         print("NEXT")
-
+        
 
 def sensorController(relayStatus):
     while True:
@@ -57,7 +57,7 @@ def sensorController(relayStatus):
             sensor, Config.get("SENSOR_DHT22_GPIO"))
         if (resultHumidity and resultTemperature == None) or resultHumidity > 100:
             print("Faulty Measurement")
-            time.sleep(5)
+            time.sleep(10)
         else:
             resultHumidity = round(resultHumidity, 2)
             resultTemperature = round(resultTemperature, 2)
@@ -69,6 +69,7 @@ def sensorController(relayStatus):
                 relayStatus = relayOFF(Config.get("HUMIDIFIER_GPIO"))
             else:
                 pass
+        time.sleep(5)
 
 
 def main():
