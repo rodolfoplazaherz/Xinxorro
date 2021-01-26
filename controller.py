@@ -58,7 +58,7 @@ def sensorController(relayStatus):
         if resultHumidity and resultTemperature == None:
             print("Faulty Measurement")
             time.sleep(10)
-        if resultHumidity > 100:
+        elif resultHumidity > 100:
             print("Faulty Measurement")
             time.sleep(10)
         else:
