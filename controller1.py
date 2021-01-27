@@ -46,7 +46,6 @@ def ventilatorController(relayStatus):
         print("TURNING VENTILATOR OFF")
         relayOFF(Config.get("VENTILATOR_GPIO"))
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
-        print("NEXT")
 
 
 def atomizerController(relayStatus):
@@ -56,8 +55,8 @@ def atomizerController(relayStatus):
         relayON(Config.get("HUMIDIFIER_GPIO"))
         time.sleep((AIR_EXCHANGE_DURATION_MINUTES * 2) * 60)
         print("TURNING ATOMIZER OFF")
-        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - (AIR_EXCHANGE_DURATION_MINUTES * 2)) * 60)
         relayOFF(Config.get("HUMIDIFIER_GPIO"))
+        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - (AIR_EXCHANGE_DURATION_MINUTES * 2)) * 60)
 
 
 def main():
