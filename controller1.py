@@ -19,7 +19,7 @@ def gpioSetup():
     GPIO.setwarnings(False)
     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
-    for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_GPIO"), Config.get("SENSOR_DHT22_GPIO")]:
+    for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_IN_GPIO"), Config.get("VENTILATOR_OUT_GPIO"),  Config.get("SENSOR_DHT22_GPIO")]:
         GPIO.setup(gpio, GPIO.OUT)
     return True
 
