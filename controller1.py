@@ -19,7 +19,7 @@ def gpioSetup():
     GPIO.setwarnings(False)
     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
-    for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_GPIO"), Config.get("SENSOR_DHT22_GPIO")]:
+    for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_IN_GPIO"), Config.get("VENTILATOR_OUT_GPIO"),  Config.get("SENSOR_DHT22_GPIO")]:
         GPIO.setup(gpio, GPIO.OUT)
     return True
 
@@ -41,45 +41,31 @@ def relayOFF(gpioNumber):
 def ventilatorController(relayStatus):
     while True:
         print("TURNING VENTILATOR ON")
-        relayON(Config.get("VENTILATOR_GPIO"))
+        relayON(Config.get("VENTILATOR_IN_GPIO"))
+        relayON(Config.get("VENTILATOR_OUT_GPIO"))
         time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
         print("TURNING VENTILATOR OFF")
-        relayOFF(Config.get("VENTILATOR_GPIO"))
+        relayOFF(Config.get("VENTILATOR_IN_GPIO"))
+        relayOFF(Config.get("VENTILATOR_OUT_GPIO"))
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
-        print("NEXT")
-        
 
-def sensorController(relayStatus):
+
+def atomizerController(relayStatus):
     while True:
-        sensor = Adafruit_DHT.DHT22
-        timeStamp = datetime.datetime.now()
-        resultHumidity, resultTemperature = Adafruit_DHT.read_retry(
-            sensor, Config.get("SENSOR_DHT22_GPIO"))
-        if resultHumidity or resultTemperature == None:
-            print("Faulty Measurement")
-            time.sleep(10)
-        elif resultHumidity > 100:
-            print("Faulty Measurement")
-            time.sleep(10)
-        else:
-            resultHumidity = round(resultHumidity)
-            resultTemperature = round(resultTemperature)
-            print("rh:{}, °C:{}, time:{}".format(
-                resultHumidity, resultTemperature, timeStamp))
-            if resultHumidity < Config.get("IDEAL_HUMIDITY_POINT"):
-                relayStatus = relayON(Config.get("HUMIDIFIER_GPIO"))
-            elif resultHumidity > Config.get("IDEAL_HUMIDITY_POINT"):
-                relayStatus = relayOFF(Config.get("HUMIDIFIER_GPIO"))
-            else:
-                pass
-        time.sleep(5)
+        time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
+        print("TURNING ATOMIZER ON")
+        relayON(Config.get("HUMIDIFIER_GPIO"))
+        time.sleep((AIR_EXCHANGE_DURATION_MINUTES * 5) * 60)
+        print("TURNING ATOMIZER OFF")
+        relayOFF(Config.get("HUMIDIFIER_GPIO"))
+        time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - (AIR_EXCHANGE_DURATION_MINUTES * 5)) * 60)
 
 
 def main():
     try:
         if gpioSetup():
             relayStatus = False
-            t1 = threading.Thread(target=sensorController, args=[relayStatus,])
+            t1 = threading.Thread(target=atomizerController, args=[relayStatus,])
             t2 = threading.Thread(target=ventilatorController, args=[relayStatus,])
         t1.start()
         t2.start()
