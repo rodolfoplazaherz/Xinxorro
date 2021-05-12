@@ -19,7 +19,7 @@ def gpioSetup():
     GPIO.setwarnings(False)
     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
-    for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_GPIO"), Config.get("SENSOR_DHT22_GPIO")]:
+    for gpio in [Config.get("HUMIDIFIER_GPIO"), Config.get("VENTILATOR_IN_GPIO"), Config.get("VENTILATOR_OUT_GPIO"), Config.get("SENSOR_DHT22_GPIO")]:
         GPIO.setup(gpio, GPIO.OUT)
     return True
 
@@ -41,10 +41,12 @@ def relayOFF(gpioNumber):
 def ventilatorController(relayStatus):
     while True:
         print("TURNING VENTILATOR ON")
-        relayON(Config.get("VENTILATOR_GPIO"))
+        relayON(Config.get("VENTILATOR_IN_GPIO"))
+        relayON(Config.get("VENTILATOR_OUT_GPIO"))
         time.sleep(AIR_EXCHANGE_DURATION_MINUTES * 60)
         print("TURNING VENTILATOR OFF")
-        relayOFF(Config.get("VENTILATOR_GPIO"))
+        relayOFF(Config.get("VENTILATOR_IN_GPIO"))
+        relayOFF(Config.get("VENTILATOR_OUT_GPIO"))
         time.sleep((AIR_EXCHANGE_PERIOD_MINUTES - AIR_EXCHANGE_DURATION_MINUTES) * 60)
         print("NEXT")
         
