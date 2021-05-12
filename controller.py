@@ -57,7 +57,7 @@ def sensorController(relayStatus):
         timeStamp = datetime.datetime.now()
         resultHumidity, resultTemperature = Adafruit_DHT.read_retry(
             sensor, Config.get("SENSOR_DHT22_GPIO"))
-        if resultHumidity or resultTemperature == None:
+        if resultHumidity == None or resultTemperature == None:
             print("Faulty Measurement")
             time.sleep(10)
         elif resultHumidity > 100:
